@@ -8,5 +8,7 @@ namespace TestAICore.DataObjects
 
         public decimal DayReturn { get; set; }
 
+        public decimal BenchmarkReturn { get; set; }
+
     }
 }

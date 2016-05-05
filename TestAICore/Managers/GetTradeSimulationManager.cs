@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,11 +23,14 @@ namespace TestAICore.Managers
             set { transactionID = value; }
         }
 
+        private readonly string mBenchmarkTicker;
+
         public GetTradeSimulationManager(IDocDB aDocDB)
         {
             NextTransactionID = 1;
             mDocDB = aDocDB;
             mCashTicker = "$";
+            mBenchmarkTicker = ConfigurationManager.AppSettings["returns-benchmark-ticker"]; 
         }
 
 
@@ -43,7 +47,7 @@ namespace TestAICore.Managers
 
         private decimal totalCommission { get; set; }
 
-
+        private List<MarketData> benchmarkMarketData { get; set; }
 
 
 
@@ -56,12 +60,15 @@ namespace TestAICore.Managers
             decimal minimumBuyPercent = 0.003M;
             commissionPerShare = 0.005M;
             totalCommission = 0M;
+            benchmarkMarketData = GetMarketData(mBenchmarkTicker);
+
 
             updateMessage("Starting Trade Sim - Simulate Balanced Portfolio");
             sim = new TradeSimulation() { StartDate = aStartDate, EndDate = anEndDate, RunDate = DateTime.Now };
             currPositions = new List<Position>();
             buyTransactions = new List<Transaction>();
             DateTime currDate = new DateTime(sim.StartDate.Ticks);
+            DateTime yesterDate = currDate.AddDays(-1);
             sim.Parameters.Add("SimulationType", "SimulatedBalancedPortfolio");
             sim.Parameters.Add("runningCash", runningCash.ToString());
             sim.Parameters.Add("maxOwnershipPercent", maxOwnershipPercent.ToString());
@@ -74,7 +81,7 @@ namespace TestAICore.Managers
 
                 // refresh yesterday's positions
                 currPositions = UpdatePositions(currPositions, currDate, updateMessage);
-                CalcDailyReturns(currDate.AddDays(-1)); // For yesterday
+                CalcDailyReturns(yesterDate); // For yesterday
 
                 // Get today's buys and sells
                 var buyPredictions = new List<AIData>();
@@ -172,6 +179,8 @@ namespace TestAICore.Managers
                 var todayCash = new Position() { Date = currDate, MarketValue = runningCash, Shares = 1, Ticker = mCashTicker, TransactionId = -1 };
                 sim.Positions.Add(todayCash);
 
+                // Roll Dates
+                yesterDate = currDate;
                 currDate = currDate.NextBusinessDay();
             }
 
@@ -201,8 +210,12 @@ namespace TestAICore.Managers
             var yesterdayDate = currDate.AddDays(-1);
             var yesterdayMV = (from pos in sim.Positions where pos.Date == yesterdayDate select pos.MarketValue).Sum();
             var todayMV = (from pos in sim.Positions where pos.Date == currDate select pos.MarketValue).Sum();
+            var benchmarkTodayMV = (from md in benchmarkMarketData where md.PriceDate == currDate && md.Ticker == mBenchmarkTicker select md.AdjClose).DefaultIfEmpty(0).First();
+            var benchmarkYesterdayMV = (from md in benchmarkMarketData where md.PriceDate < currDate && md.Ticker == mBenchmarkTicker orderby md.PriceDate select md.AdjClose).LastOrDefault();
             var returnVal = yesterdayMV == 0 ? 1 : (todayMV / yesterdayMV);
-            sim.Returns.Add( new DailyReturn() { Date = currDate, DayReturn = returnVal } );
+            var benchmarkReturnVal = benchmarkTodayMV == 0 ? 1 : (benchmarkTodayMV / benchmarkYesterdayMV);
+
+            sim.Returns.Add( new DailyReturn() { Date = currDate, DayReturn = returnVal, BenchmarkReturn = benchmarkReturnVal } );
         }
 
         private Bet MakeBet(Transaction buy, Transaction sell, Position oldPos, string aReason)
@@ -445,6 +458,14 @@ namespace TestAICore.Managers
             return marketDataSeries.MarketDataList.Find(x => x.PriceDate == aDate);
         }
 
+
+
+        private List<MarketData> GetMarketData(string aTicker)
+        {
+            var marketDataSeries = mDocDB.CollectionMarketData.GetById(aTicker);
+            if (marketDataSeries == null) { throw new Exception("No marketData for: " + aTicker); }
+            return marketDataSeries.MarketDataList;
+        }
 
     }
 }
