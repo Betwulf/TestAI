@@ -1,0 +1,72 @@
+﻿{
+  "Inputs": {
+    "input1": {
+      "ColumnNames": [
+        "ticker",
+        "date",
+        "adjustedClose",
+        "adjustedOpen",
+        "adjustedHigh",
+        "adjustedLow",
+        "volume",
+        "volumeOneDayOld",
+        "volumeTwoDaysOld",
+        "dailyReturn",
+        "yearsHigh",
+        "yearsLow",
+        "yearsHighPercent",
+        "yearsLowPercent",
+        "movingAvg9",
+        "movingAvg15",
+        "movingAvg30",
+        "movingAvg60",
+        "standardDeviation"
+      ],
+      "Values": [
+        [
+          "value",
+          "",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "value",
+          "",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ]
+    }
+  },
+  "GlobalParameters": { }
+}
