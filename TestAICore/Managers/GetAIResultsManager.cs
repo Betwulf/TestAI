@@ -13,12 +13,12 @@ namespace TestAICore.Managers
     public class GetAIResultsManager
     {
 
-        private IDocDB mDocDB;
+        private IDocSource mDocDB;
         private GetCalculationsManager mCalcMan = null;
         private string mAzureURL = null;
         private string mApiKey = null;
 
-        public GetAIResultsManager(IDocDB aDocDB)
+        public GetAIResultsManager(IDocSource aDocDB)
         {
             mDocDB = aDocDB;
             mCalcMan = new GetCalculationsManager(mDocDB);

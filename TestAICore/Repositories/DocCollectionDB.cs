@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace TestAICore.Repositories
 {
-    public class DocCollection<T> : IDocCollection<T> 
+    public class DocCollectionDB<T> : IDocCollection<T> 
         where T : Document
     {
 
@@ -21,7 +21,7 @@ namespace TestAICore.Repositories
 
         private DocumentClient Client { get; set; }
 
-        public DocCollection(DocumentClient client, string databaseLink, string collectionId)
+        public DocCollectionDB(DocumentClient client, string databaseLink, string collectionId)
         {
             DatabaseLink = databaseLink;
             CollectionId = collectionId;

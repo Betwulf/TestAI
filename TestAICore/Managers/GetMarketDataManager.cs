@@ -11,8 +11,8 @@ namespace TestAICore.Managers
 {
     public class GetMarketDataManager
     {
-        private IDocDB mDocDB;
-        public GetMarketDataManager(IDocDB aDocDB)
+        private IDocSource mDocDB;
+        public GetMarketDataManager(IDocSource aDocDB)
         {
             mDocDB = aDocDB;
         }

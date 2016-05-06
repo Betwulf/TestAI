@@ -11,11 +11,11 @@ namespace TestAI
 {
     public class AIController
     {
-        private IDocDB mDocDB;
+        private IDocSource mDocDB;
 
         public AIController()
         {
-            mDocDB = new DocDBFile();
+            mDocDB = new DocFile();
         }
 
 

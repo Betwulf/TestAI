@@ -10,7 +10,7 @@ using TestAICore.DataObjects;
 
 namespace TestAICore.Repositories
 {
-    public class DocDB : IDocDB
+    public class DocDB : IDocSource
     {
         private DocumentClient client;
         private DocumentClient Client
@@ -112,14 +112,14 @@ namespace TestAICore.Repositories
 
 
 
-        private DocCollection<Universe> collectionUniverse;
+        private DocCollectionDB<Universe> collectionUniverse;
         public IDocCollection<Universe> CollectionUniverse
         {
             get
             {
                 if (collectionUniverse == null)
                 {
-                    collectionUniverse = new DocCollection<Universe>(Client, Database.SelfLink, CollectionUniverseId);
+                    collectionUniverse = new DocCollectionDB<Universe>(Client, Database.SelfLink, CollectionUniverseId);
                 }
                 return collectionUniverse;
             }
@@ -144,14 +144,14 @@ namespace TestAICore.Repositories
 
 
 
-        private DocCollection<MarketDataSeries> collectionMarketData;
+        private DocCollectionDB<MarketDataSeries> collectionMarketData;
         public IDocCollection<MarketDataSeries> CollectionMarketData
         {
             get
             {
                 if (collectionMarketData == null)
                 {
-                    collectionMarketData = new DocCollection<MarketDataSeries>(Client, Database.SelfLink, CollectionMarketDataId);
+                    collectionMarketData = new DocCollectionDB<MarketDataSeries>(Client, Database.SelfLink, CollectionMarketDataId);
                 }
                 return collectionMarketData;
             }
@@ -176,14 +176,14 @@ namespace TestAICore.Repositories
 
 
 
-        private DocCollection<CalcDataSeries> collectionCalcData;
+        private DocCollectionDB<CalcDataSeries> collectionCalcData;
         public IDocCollection<CalcDataSeries> CollectionCalcData
         {
             get
             {
                 if (collectionCalcData == null)
                 {
-                    collectionCalcData = new DocCollection<CalcDataSeries>(Client, Database.SelfLink, CollectionCalcDataId);
+                    collectionCalcData = new DocCollectionDB<CalcDataSeries>(Client, Database.SelfLink, CollectionCalcDataId);
                 }
                 return collectionCalcData;
             }
@@ -207,14 +207,14 @@ namespace TestAICore.Repositories
 
 
 
-        private DocCollection<CalcDataWithTrainingSeries> collectionCalcDataWithTraining;
+        private DocCollectionDB<CalcDataWithTrainingSeries> collectionCalcDataWithTraining;
         public IDocCollection<CalcDataWithTrainingSeries> CollectionCalcDataWithTraining
         {
             get
             {
                 if (collectionCalcDataWithTraining == null)
                 {
-                    collectionCalcDataWithTraining = new DocCollection<CalcDataWithTrainingSeries>(Client, Database.SelfLink, CollectionCalcDataWithTrainingId);
+                    collectionCalcDataWithTraining = new DocCollectionDB<CalcDataWithTrainingSeries>(Client, Database.SelfLink, CollectionCalcDataWithTrainingId);
                 }
                 return collectionCalcDataWithTraining;
             }
@@ -224,14 +224,14 @@ namespace TestAICore.Repositories
 
 
 
-        private DocCollection<AIDataSeries> collectionAIData;
+        private DocCollectionDB<AIDataSeries> collectionAIData;
         public IDocCollection<AIDataSeries> CollectionAIData
         {
             get
             {
                 if (collectionAIData == null)
                 {
-                    collectionAIData = new DocCollection<AIDataSeries>(Client, Database.SelfLink, CollectionAIDataId);
+                    collectionAIData = new DocCollectionDB<AIDataSeries>(Client, Database.SelfLink, CollectionAIDataId);
                 }
                 return collectionAIData;
             }

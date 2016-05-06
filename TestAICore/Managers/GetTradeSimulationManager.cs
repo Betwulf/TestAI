@@ -11,7 +11,7 @@ namespace TestAICore.Managers
     public class GetTradeSimulationManager
     {
 
-        private IDocDB mDocDB;
+        private IDocSource mDocDB;
 
         private readonly string mCashTicker;
 
@@ -25,7 +25,7 @@ namespace TestAICore.Managers
 
         private readonly string mBenchmarkTicker;
 
-        public GetTradeSimulationManager(IDocDB aDocDB)
+        public GetTradeSimulationManager(IDocSource aDocDB)
         {
             NextTransactionID = 1;
             mDocDB = aDocDB;

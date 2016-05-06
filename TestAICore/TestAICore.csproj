@@ -85,12 +85,12 @@
     <Compile Include="Managers\GetTradeSimulationManager.cs" />
     <Compile Include="Managers\GetUniverseManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\DocCollection.cs" />
+    <Compile Include="Repositories\DocCollectionDB.cs" />
     <Compile Include="Repositories\DocCollectionFile.cs" />
     <Compile Include="Repositories\DocDB.cs" />
-    <Compile Include="Repositories\DocDBFile.cs" />
+    <Compile Include="Repositories\DocFile.cs" />
     <Compile Include="Repositories\IDocCollection.cs" />
-    <Compile Include="Repositories\IDocDB.cs" />
+    <Compile Include="Repositories\IDocSource.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -5,11 +5,11 @@ using TestAICore.DataObjects;
 
 namespace TestAICore.Repositories
 {
-    public class DocDBFile : IDocDB
+    public class DocFile : IDocSource
     {
         private string mRootDir;
 
-        public DocDBFile()
+        public DocFile()
         {
             mRootDir = ConfigurationManager.AppSettings["docdb-rootdir"];
         }

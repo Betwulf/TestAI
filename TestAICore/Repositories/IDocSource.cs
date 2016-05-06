@@ -4,7 +4,7 @@ using TestAICore.DataObjects;
 
 namespace TestAICore.Repositories
 {
-    public interface IDocDB
+    public interface IDocSource
     {
 
         Task<bool> DeleteCalcDataWithTrainingCollectionAsync(Action<string> updateMessage);

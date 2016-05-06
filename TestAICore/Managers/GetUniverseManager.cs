@@ -9,8 +9,8 @@ namespace TestAICore.Managers
 {
     public class GetUniverseManager
     {
-        private IDocDB mDocDB;
-        public GetUniverseManager(IDocDB aDocDB)
+        private IDocSource mDocDB;
+        public GetUniverseManager(IDocSource aDocDB)
         {
             mDocDB = aDocDB;
         }

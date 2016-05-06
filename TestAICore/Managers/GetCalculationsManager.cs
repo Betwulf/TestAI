@@ -12,8 +12,8 @@ namespace TestAICore.Managers
     {
         private readonly int daysOfFutureScore;
 
-        private IDocDB mDocDB;
-        public GetCalculationsManager(IDocDB aDocDB)
+        private IDocSource mDocDB;
+        public GetCalculationsManager(IDocSource aDocDB)
         {
             string stringFutureWindow = ConfigurationManager.AppSettings["calc-future-window"];
             daysOfFutureScore = Int32.Parse(stringFutureWindow);
