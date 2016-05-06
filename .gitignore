@@ -236,4 +236,4 @@ _Pvt_Extensions
 .fake/
 
 # App.config should be ignored, has sensitive data
-*.App.config
+*App.config
