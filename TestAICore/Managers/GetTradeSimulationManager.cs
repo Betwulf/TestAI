@@ -69,6 +69,7 @@ namespace TestAICore.Managers
             buyTransactions = new List<Transaction>();
             DateTime currDate = new DateTime(sim.StartDate.Ticks);
             DateTime yesterDate = currDate.AddDays(-1);
+            DateTime twoDaysOld = yesterDate.AddDays(-1);
             sim.Parameters.Add("SimulationType", "SimulatedBalancedPortfolio");
             sim.Parameters.Add("runningCash", runningCash.ToString());
             sim.Parameters.Add("maxOwnershipPercent", maxOwnershipPercent.ToString());
@@ -81,7 +82,7 @@ namespace TestAICore.Managers
 
                 // refresh yesterday's positions
                 currPositions = UpdatePositions(currPositions, currDate, updateMessage);
-                CalcDailyReturns(yesterDate); // For yesterday
+                CalcDailyReturns(yesterDate, twoDaysOld); // For yesterday
 
                 // Get today's buys and sells
                 var buyPredictions = new List<AIData>();
@@ -180,6 +181,7 @@ namespace TestAICore.Managers
                 sim.Positions.Add(todayCash);
 
                 // Roll Dates
+                twoDaysOld = yesterDate;
                 yesterDate = currDate;
                 currDate = currDate.NextBusinessDay();
             }
@@ -192,7 +194,7 @@ namespace TestAICore.Managers
             }
             var lastDayCash = new Position() { Date = currDate, MarketValue = runningCash, Shares = 1, Ticker = mCashTicker, TransactionId = -1 };
             sim.Positions.Add(lastDayCash);
-            CalcDailyReturns(currDate); // Final Returns
+            CalcDailyReturns(currDate, yesterDate); // Final Returns
 
             // Save Commission paid
             sim.TotalCommissionPaid = totalCommission;
@@ -205,10 +207,9 @@ namespace TestAICore.Managers
         }
 
 
-        private void CalcDailyReturns(DateTime currDate)
+        private void CalcDailyReturns(DateTime currDate, DateTime yesterDate)
         {
-            var yesterdayDate = currDate.AddDays(-1);
-            var yesterdayMV = (from pos in sim.Positions where pos.Date == yesterdayDate select pos.MarketValue).Sum();
+            var yesterdayMV = (from pos in sim.Positions where pos.Date == yesterDate select pos.MarketValue).Sum();
             var todayMV = (from pos in sim.Positions where pos.Date == currDate select pos.MarketValue).Sum();
             var benchmarkTodayMV = (from md in benchmarkMarketData where md.PriceDate == currDate && md.Ticker == mBenchmarkTicker select md.AdjClose).DefaultIfEmpty(0).First();
             var benchmarkYesterdayMV = (from md in benchmarkMarketData where md.PriceDate < currDate && md.Ticker == mBenchmarkTicker orderby md.PriceDate select md.AdjClose).LastOrDefault();
