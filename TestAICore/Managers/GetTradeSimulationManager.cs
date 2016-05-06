@@ -443,7 +443,7 @@ namespace TestAICore.Managers
                 }
                 else
                 {
-                    Console.WriteLine($"No trades for {ticker}");
+                    Console.WriteLine($"Compress Bets - No trades for {ticker}");
                 }
             }
             return newBets;
