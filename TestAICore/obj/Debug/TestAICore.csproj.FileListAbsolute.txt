@@ -1,0 +1,15 @@
+C:\Users\bob\Source\Repos\TestAI\TestAICore\obj\Debug\TestAICore.csprojResolveAssemblyReference.cache
+C:\Users\bob\Source\Repos\TestAI\TestAICore\bin\Debug\Microsoft.Azure.Documents.ServiceInterop.dll
+C:\Users\bob\Source\Repos\TestAI\TestAICore\bin\Debug\DocumentDB.Spatial.Sql.dll
+C:\Users\bob\Source\Repos\TestAI\TestAICore\bin\Debug\TestAICore.dll
+C:\Users\bob\Source\Repos\TestAI\TestAICore\bin\Debug\TestAICore.pdb
+C:\Users\bob\Source\Repos\TestAI\TestAICore\bin\Debug\Microsoft.Azure.Documents.Client.dll
+C:\Users\bob\Source\Repos\TestAI\TestAICore\bin\Debug\Newtonsoft.Json.dll
+C:\Users\bob\Source\Repos\TestAI\TestAICore\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\bob\Source\Repos\TestAI\TestAICore\bin\Debug\System.Web.Http.dll
+C:\Users\bob\Source\Repos\TestAI\TestAICore\bin\Debug\Microsoft.Azure.Documents.Client.xml
+C:\Users\bob\Source\Repos\TestAI\TestAICore\bin\Debug\Newtonsoft.Json.xml
+C:\Users\bob\Source\Repos\TestAI\TestAICore\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\bob\Source\Repos\TestAI\TestAICore\bin\Debug\System.Web.Http.xml
+C:\Users\bob\Source\Repos\TestAI\TestAICore\obj\Debug\TestAICore.dll
+C:\Users\bob\Source\Repos\TestAI\TestAICore\obj\Debug\TestAICore.pdb
