@@ -60,3 +60,5 @@ C:\Users\bob\Source\Repos\TestAI\TestAI\bin\Debug\zh-Hans\Humanizer.resources.dl
 C:\Users\bob\Source\Repos\TestAI\TestAI\bin\Debug\zh-Hant\Humanizer.resources.dll
 C:\Users\bob\Source\Repos\TestAI\TestAI\obj\Debug\TestAI.exe
 C:\Users\bob\Source\Repos\TestAI\TestAI\obj\Debug\TestAI.pdb
+C:\CodeTest\TestAI\TestAI\obj\Debug\TestAI.exe
+C:\CodeTest\TestAI\TestAI\obj\Debug\TestAI.pdb
