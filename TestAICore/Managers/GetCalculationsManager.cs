@@ -86,7 +86,6 @@ namespace TestAICore.Managers
                 // Save calcDataWithTrainingSeries
                 if (calcDataWithTrainingSeries.CalcDataList.Count > 0)
                 {
-                    await Task.Delay(5); // TODO: why is this here?
                     try
                     {
                         await mDocDB.CollectionCalcDataWithTraining.CreateAsync(calcDataWithTrainingSeries);
@@ -127,7 +126,7 @@ namespace TestAICore.Managers
         {
             updateMessage($"Begin CreateCalculations. daysOfFutureScore = {daysOfFutureScore}");
             DateTime? latestDate = null;
-            int aYearAgoInDays = 250;
+            int aYearAgoInDays = 252; // Changed to 252 thx to gwoody1984 - "Average is 252 for NASDAQ and NYSE"
             // Get the universe
             var uMan = new GetUniverseManager(mDocDB);
             var tickerlist = await uMan.GetUniverse(aUniverseName, updateMessage);
@@ -179,9 +178,9 @@ namespace TestAICore.Managers
                         var calcedData = new CalcData();
                         calcedData.SetFromMarketData(md);
                         calcedData.DailyReturn = (md.AdjClose / mdYesterday.AdjClose) - 1;
-                        calcedData.ReturnOpen = ((md.Open / AdjustList[i]) / mdYesterday.AdjClose) - 1;
-                        calcedData.ReturnHigh = ((md.High / AdjustList[i]) / mdYesterday.AdjClose) - 1;
-                        calcedData.ReturnLow = ((md.Low / AdjustList[i]) / mdYesterday.AdjClose) - 1;
+                        calcedData.ReturnOpen = ( md.Open / mdYesterday.AdjClose) - 1;
+                        calcedData.ReturnHigh = ( md.High / mdYesterday.AdjClose) - 1;
+                        calcedData.ReturnLow = ( md.Low / mdYesterday.AdjClose) - 1;
 
                         DateTime yearAgoDate = marketDataSeries.MarketDataList[i - aYearAgoInDays].PriceDate;
                         // Begin, we have enough history to create data

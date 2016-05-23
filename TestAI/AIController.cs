@@ -118,10 +118,7 @@ namespace TestAI
                 try
                 {
                     var mgr = new GetCalculationsManager(mDocDB);
-                    await mgr.CalculateTrainingSignal(aUniverseName, updateMessage).
-                        ContinueWith(t => updateMessage(t.Exception.ToString()),
-                        TaskContinuationOptions.NotOnRanToCompletion);
-                    return true;
+                    return await mgr.CalculateTrainingSignal(aUniverseName, updateMessage);
                 }
                 catch (Exception gex)
                 {
