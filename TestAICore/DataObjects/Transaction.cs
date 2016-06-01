@@ -11,13 +11,13 @@ namespace TestAICore.DataObjects
     {
         public TransactionType Type { get; set; }
 
+        public string Ticker { get; set; }
+
         public decimal MarketValue { get; set; }
 
         public decimal Cost { get; set; }
 
         public decimal Price { get; set; }
-
-        public string Ticker { get; set; }
 
         public int Shares { get; set; }
 

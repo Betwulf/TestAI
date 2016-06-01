@@ -6,6 +6,7 @@ using Microsoft.Azure.Documents;
 using Newtonsoft.Json;
 using System.IO;
 using System.Configuration;
+using System.Collections.Concurrent;
 
 namespace TestAICore.Repositories
 {
@@ -13,12 +14,12 @@ namespace TestAICore.Repositories
         where T : Document
     {
         private readonly string mRootDir;
-        private Dictionary<string, T> DocStore;
+        private ConcurrentDictionary<string, T> DocStore;
         private readonly bool isCached;
 
         public DocCollectionFile(string aRootDir)
         {
-            DocStore = new Dictionary<string, T>();
+            DocStore = new ConcurrentDictionary<string, T>();
             mRootDir = aRootDir;
             string isCachedString = ConfigurationManager.AppSettings["docdb-caching-on"];
             if (isCachedString == "true") { isCached = true; } else { isCached = false; }
@@ -56,7 +57,10 @@ namespace TestAICore.Repositories
                 {
                     Console.WriteLine("Saving New File \"{0}\" .", pathString);
                     File.WriteAllText(pathString, JsonConvert.SerializeObject(entity));
-                    if (isCached) DocStore.Add(entity.Id, entity);
+                    if (isCached)
+                    {
+                        DocStore.AddOrUpdate(entity.Id, entity, (k, v) => entity);
+                    }
                 }
                 else
                 {
@@ -64,8 +68,7 @@ namespace TestAICore.Repositories
                     File.WriteAllText(pathString, JsonConvert.SerializeObject(entity));
                     if (isCached)
                     {
-                        DocStore.Remove(entity.Id); // Overwrite cache
-                        DocStore.Add(entity.Id, entity);
+                        DocStore.AddOrUpdate(entity.Id, entity, (k, v) => entity);
                     }
                 }
             });
@@ -77,7 +80,8 @@ namespace TestAICore.Repositories
         {
             await Task.Run(() =>
             {
-                if (isCached) DocStore.Remove(id);
+                T val;
+                if (isCached) DocStore.TryRemove(id, out val);
                 string pathString = GetFilename(id);
                 Console.WriteLine("Deleting file: {0}\n", pathString);
                 if (File.Exists(pathString))
@@ -118,7 +122,10 @@ namespace TestAICore.Repositories
                 else
                 {
                     tempObject = JsonConvert.DeserializeObject<T>(File.ReadAllText(item.FullName));
-                    if (isCached) DocStore.Add(id, tempObject);
+                    if (isCached)
+                    {
+                        DocStore.AddOrUpdate(id, tempObject, (k, v) => tempObject);
+                    }
                 }
                 tempList.Add(tempObject);
             }
@@ -141,7 +148,11 @@ namespace TestAICore.Repositories
             if (File.Exists(pathString))
             {
                 T theDoc = JsonConvert.DeserializeObject<T>(File.ReadAllText(pathString));
-                if (isCached) DocStore.Add(id, theDoc);
+                if (isCached)
+                {
+                    DocStore.AddOrUpdate(id, theDoc, (k, v) => theDoc);
+                }
+
                 return theDoc;
             }
             else

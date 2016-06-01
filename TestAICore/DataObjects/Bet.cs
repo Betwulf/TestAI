@@ -8,6 +8,10 @@ namespace TestAICore.DataObjects
 
         public DateTime SellDate { get; set; }
 
+        public string Ticker { get; set; }
+
+        public decimal Price { get; set; }
+
         public decimal NotionalValue { get; set; }
 
         public decimal CommissionPaid { get; set; }
@@ -21,8 +25,6 @@ namespace TestAICore.DataObjects
         public decimal NetProfitLoss { get; set; }
 
         public decimal ZeroBasedReturn { get { return Return - 1; } }
-
-        public string Ticker { get; set; }
 
         public int DurationInDays { get; set; }
 

@@ -230,7 +230,7 @@ namespace TestAI
             {
                 updateMessage($"CALCED Data up to {latestDataDate.Value.DocIdFromDate()}");
                 var mgrAI = new GetAIResultsManager(mDocDB);
-                DateTime lastAIDate = mgrAI.GetLastAIDataDate();
+                DateTime lastAIDate = mgrAI.GetLastAIDataDate().AddDays(1);
                 success = await UpdateMLData(aUniverseName, lastAIDate, endDate, updateMessage);
             }
             else { updateMessage("Received no Date from UpdateCalcData"); return false; }

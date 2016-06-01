@@ -228,6 +228,7 @@ namespace TestAICore.Managers
             var aBet = new Bet() { BuyDate = buy.TransactionDate, SellDate = sell.TransactionDate,
                 Ticker = buy.Ticker, ScoredLabelMean = oldPos.ScoredLabelMean,
                 ScoredLabelStandardDeviation = oldPos.ScoredLabelStandardDeviation, Tier = oldPos.Tier, Reason = aReason };
+            aBet.Price = buy.Price;
             aBet.NotionalValue = -buy.MarketValue; // Buy trx MktVal is negative
             aBet.CommissionPaid = buy.Commission + sell.Commission;
             aBet.ProfitLoss = sell.MarketValue + buy.MarketValue;
@@ -425,6 +426,7 @@ namespace TestAICore.Managers
                         else
                         {
                             newBet.NotionalValue = listBets[startIndex].NotionalValue;
+                            newBet.Price = listBets[startIndex].Price;
                             newBet.BuyDate = listBets[startIndex].BuyDate;
                             newBet.SellDate = listBets[i].SellDate;
                             newBet.DurationInDays = (newBet.SellDate - newBet.BuyDate).Days;
